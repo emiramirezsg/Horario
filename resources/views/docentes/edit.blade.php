@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +64,7 @@
         <form action="{{ route('docentes.update', $docente->id) }}" method="POST">
             @csrf
             @method('PUT')
+            <!-- Campos para el docente -->
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" value="{{ $docente->nombre }}" required>
@@ -74,7 +74,7 @@
                 <input type="text" id="apellido" name="apellido" value="{{ $docente->apellido }}" required>
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Correo Electrónico</label>
                 <input type="email" id="email" name="email" value="{{ $docente->email }}" required>
             </div>
             <div class="form-group">

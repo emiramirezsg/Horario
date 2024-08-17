@@ -61,12 +61,16 @@
 <body>
     <div class="form-container">
         <h2>Crear Docente</h2>
-        <form action="{{ route('create.docente') }}" method="POST">
+        <form action="{{ route('docentes.store') }}" method="POST">
             @csrf
-            <!-- Campos para el usuario -->
+            <!-- Campos para el usuario y el docente -->
             <div class="form-group">
-                <label for="name">Nombre de Usuario</label>
-                <input type="text" id="name" name="name" required>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" required>
             </div>
             <div class="form-group">
                 <label for="email">Correo Electrónico</label>
@@ -80,16 +84,6 @@
                 <label for="password_confirmation">Confirmar Contraseña</label>
                 <input type="password" id="password_confirmation" name="password_confirmation" required>
             </div>
-
-            <!-- Campos para el docente -->
-            <div class="form-group">
-                <label for="docente_nombre">Nombre del Docente</label>
-                <input type="text" id="docente_nombre" name="docente_nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="docente_apellido">Apellido del Docente</label>
-                <input type="text" id="docente_apellido" name="docente_apellido" required>
-            </div>
             <div class="form-group">
                 <label for="categoria_id">Categoría</label>
                 <select id="categoria_id" name="categoria_id" required>
@@ -98,8 +92,8 @@
                     @endforeach
                 </select>
             </div>
-
             <button type="submit" class="btn-submit">Guardar</button>
+            <a href="{{ route('docentes.index') }}" class="btn-back">Cancelar</a>
         </form>
     </div>
 </body>

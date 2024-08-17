@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,37 +6,63 @@
     <title>Lista de Categorías</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
-        /* Copia los estilos desde la vista de materias */
-        .materia-card {
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Estilos para las tarjetas de categorías */
+        .categorias {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .categoria-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
             padding: 20px;
             transition: transform 0.3s ease;
+            position: relative;
+            width: calc(33.333% - 20px); /* Ajustar el ancho y espacio entre tarjetas */
+            box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
         }
 
-        .materia-card:hover {
+        .categoria-card:hover {
             transform: translateY(-5px);
         }
 
-        .materia-info h3 {
+        .categoria-info h3 {
             margin-top: 0;
             margin-bottom: 10px;
             font-size: 1.2em;
             color: #333;
         }
 
-        .materia-info p {
+        .categoria-info p {
             margin: 0;
             font-size: 1em;
             color: #666;
         }
 
+        .botones {
+            display: flex; /* Para alinear los botones en una fila */
+            gap: 10px; /* Espacio entre los botones */
+            margin-top: 10px;
+        }
+
         .btn {
             display: inline-block;
             padding: 8px 16px;
-            margin-right: 10px;
             border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s ease;
@@ -48,16 +73,20 @@
             color: #fff;
         }
 
+        .btn-editar:hover {
+            background-color: #218838;
+        }
+
         .btn-eliminar {
             background-color: #dc3545;
             color: #fff;
         }
 
-        .btn:hover {
-            background-color: #6c757d;
+        .btn-eliminar:hover {
+            background-color: #c82333;
         }
 
-        .btn-agregar-materia {
+        .btn-agregar-categoria {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
@@ -67,20 +96,37 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-agregar-materia:hover {
+        .btn-agregar-categoria:hover {
             background-color: #0056b3;
+        }
+
+        .btn-regresar {
+            background-color: #6c757d;
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .btn-regresar:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
+    <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
+    
     <div class="container">
         <h2>Lista de Categorías</h2>
-        <div class="materias">
+        <div class="categorias">
             @foreach($categorias as $categoria)
-            <div class="materia-card">
-                <div class="materia-info">
+            <div class="categoria-card">
+                <div class="categoria-info">
                     <h3>{{ $categoria->nombre }}</h3>
-                    <p><strong>Horas de Trabajo:</strong> {{ $categoria->hrs_trabajo }}</p>
+                    <p><strong>Horas de Trabajo:</strong> {{ $categoria->hrs_trabajo }} horas</p>
                     <p><strong>Días Libres:</strong> {{ $categoria->dias_libres }}</p>
                 </div>
                 <div class="botones">
@@ -94,7 +140,7 @@
             </div>
             @endforeach
         </div>
-        <a href="{{ route('categorias.create') }}" class="btn btn-agregar-materia">Agregar Categoría</a>
+        <a href="{{ route('categorias.create') }}" class="btn btn-agregar-categoria">Agregar Categoría</a>
     </div>
 </body>
 </html>
