@@ -110,7 +110,7 @@
             </div>
             <div class="form-group">
                 <label for="dias_libres">Días Libres</label>
-                <input type="text" id="dias_libres" name="dias_libres" required>
+                <input type="text" id="dias_libres" name="dias_libres">
             </div>
             <button type="submit" class="btn-submit">Guardar</button>
             <a href="{{ route('categorias.index') }}" class="btn-cancel">Cancelar</a>
