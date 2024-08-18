@@ -3,14 +3,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Materia;
 use App\Models\Curso;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 
 class MateriaController extends Controller
 {
     public function index()
     {
-        $materias = Materia::with('curso')->get();
-        return view('materias.index', compact('materias'));
+        $materias = Materia::with('curso', 'docente')->get();
+        $cursos = Curso::all(); // Obtener todos los cursos
+        $docentes = Docente::all(); // Obtener todos los docentes
+
+        return view('materias.index', compact('materias', 'cursos', 'docentes'));
     }
 
     public function create()
