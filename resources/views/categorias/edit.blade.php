@@ -6,13 +6,22 @@
     <title>Editar Categoría</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
         .form-container {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad */
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             max-width: 500px;
             margin: 0 auto;
+            margin-top: 50px; /* Espacio superior para centrar verticalmente */
         }
 
         .form-container h2 {
@@ -48,7 +57,8 @@
             text-decoration: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-right: 10px;
+            margin-top: 10px;
+            display: inline-block;
         }
 
         .btn-submit {
@@ -61,12 +71,13 @@
         }
 
         .btn-cancel {
-            background-color: #6c757d;
+            background-color: #dc3545;
             color: #fff;
+            margin-left: 10px;
         }
 
         .btn-cancel:hover {
-            background-color: #5a6268;
+            background-color: #c82333;
         }
     </style>
 </head>

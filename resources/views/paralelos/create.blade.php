@@ -6,14 +6,22 @@
     <title>Agregar Paralelo</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
-        /* Estilos para el formulario de creación */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
         .form-container {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad */
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             max-width: 500px;
             margin: 0 auto;
+            margin-top: 50px; /* Espacio superior para centrar verticalmente */
         }
 
         .form-container h2 {
