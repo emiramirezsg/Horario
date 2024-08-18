@@ -23,34 +23,35 @@ class DocenteController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validar la solicitud
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'categoria_id' => 'required|exists:categorias,id',
-            'password' => 'required|string|min:8|confirmed', // Validar la contraseña
-        ]);
+{
+    // Validar la solicitud
+    $validated = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email',
+        'categoria_id' => 'required|exists:categorias,id',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-        // Crear el usuario
-        $user = User::create([
-            'name' => $validated['nombre'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'is_docente' => true, // Marcar como docente
-        ]);
+    // Crear el usuario
+    $user = User::create([
+        'name' => $validated['nombre'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'is_docente' => true, // Asegúrate de marcar al usuario como docente
+    ]);
 
-        // Crear el docente
-        Docente::create([
-            'user_id' => $user->id, // Asocia el docente con el usuario
-            'nombre' => $validated['nombre'],
-            'apellido' => $validated['apellido'],
-            'categoria_id' => $validated['categoria_id'],
-        ]);
+    // Crear el docente
+    Docente::create([
+        'nombre' => $validated['nombre'],
+        'apellido' => $validated['apellido'],
+        'email' => $validated['email'],
+        'categoria_id' => $validated['categoria_id'],
+        'user_id' => $user->id, // Asocia el docente con el usuario
+    ]);
 
-        return redirect()->route('docentes.index')->with('success', 'Docente creado con éxito.');
-    }
+    return redirect()->route('docentes.index')->with('success', 'Docente creado con éxito.');
+}
 
     public function show(Docente $docente)
     {

@@ -28,6 +28,8 @@ Route::post('/inicio_sesion', [LoginController::class, 'login'])->name('inicio_s
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Docentes Routes
+Route::resource('docentes', DocenteController::class);
+Route::get('/horarios', [DocenteController::class, 'horarios'])->name('docente.horarios');
 Route::get('/docentes', [DocenteController::class, 'index'])->name('docentes.index');
 Route::get('/docentes/create', [DocenteController::class, 'create'])->name('docentes.create');
 Route::post('/docentes', [DocenteController::class, 'store'])->name('docentes.store');
