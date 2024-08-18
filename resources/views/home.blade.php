@@ -193,7 +193,7 @@
                 <h2>Materias</h2>
                 <div class="card-actions">
                     <a href="{{ route('materias.index') }}" class="btn btn-view">Ver Todas</a>
-                    <a href="{{ route('materias.create') }}" class="btn btn-manage">Agregar Materia</a>
+                    <a href="{{ route('materias.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@
                 <h2>Cursos</h2>
                 <div class="card-actions">
                     <a href="{{ route('cursos.index') }}" class="btn btn-view">Ver Todos</a>
-                    <a href="{{ route('cursos.create') }}" class="btn btn-manage">Agregar Curso</a>
+                    <a href="{{ route('cursos.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>
@@ -217,7 +217,7 @@
                 <h2>Docentes</h2>
                 <div class="card-actions">
                     <a href="{{ route('docentes.index') }}" class="btn btn-view">Ver Todos</a>
-                    <a href="{{ route('docentes.create') }}" class="btn btn-manage">Agregar Docente</a>
+                    <a href="{{ route('docentes.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>
@@ -229,7 +229,7 @@
                 <h2>Aulas</h2>
                 <div class="card-actions">
                     <a href="{{ route('aulas.index') }}" class="btn btn-view">Ver Todas</a>
-                    <a href="{{ route('aulas.create') }}" class="btn btn-manage">Agregar Aula</a>
+                    <a href="{{ route('aulas.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>
@@ -252,7 +252,7 @@
                 <h2>Categorías</h2>
                 <div class="card-actions">
                     <a href="{{ route('categorias.index') }}" class="btn btn-view">Ver Todas</a>
-                    <a href="{{ route('categorias.create') }}" class="btn btn-manage">Agregar Categoría</a>
+                    <a href="{{ route('categorias.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>

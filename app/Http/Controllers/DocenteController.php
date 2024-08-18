@@ -6,7 +6,7 @@ use App\Models\Docente;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; // Asegúrate de importar el modelo User
+use App\Models\User;
 
 class DocenteController extends Controller
 {
@@ -38,18 +38,18 @@ class DocenteController extends Controller
             'name' => $validated['nombre'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'is_docente' => true, // Marcar como docente
         ]);
 
         // Crear el docente
         Docente::create([
+            'user_id' => $user->id, // Asocia el docente con el usuario
             'nombre' => $validated['nombre'],
             'apellido' => $validated['apellido'],
-            'email' => $validated['email'],
             'categoria_id' => $validated['categoria_id'],
-            'user_id' => $user->id, // Asocia el docente con el usuario
         ]);
 
-        return redirect()->route('docentes.index');
+        return redirect()->route('docentes.index')->with('success', 'Docente creado con éxito.');
     }
 
     public function show(Docente $docente)
@@ -84,11 +84,10 @@ class DocenteController extends Controller
         $docente->update([
             'nombre' => $validated['nombre'],
             'apellido' => $validated['apellido'],
-            'email' => $validated['email'],
             'categoria_id' => $validated['categoria_id'],
         ]);
 
-        return redirect()->route('docentes.index');
+        return redirect()->route('docentes.index')->with('success', 'Docente actualizado con éxito.');
     }
 
     public function destroy(Docente $docente)
@@ -100,6 +99,19 @@ class DocenteController extends Controller
         // Eliminar el docente
         $docente->delete();
 
-        return redirect()->route('docentes.index');
+        return redirect()->route('docentes.index')->with('success', 'Docente eliminado con éxito.');
+    }
+    public function horarios()
+    {
+        $user = Auth::user();
+        $docente = Docente::where('user_id', $user->id)->first();
+        
+        if (!$docente) {
+            return redirect()->route('home')->with('error', 'No se encontró el docente asociado.');
+        }
+
+        $horarios = $docente->horarios; // Asegúrate de tener una relación definida en el modelo Docente
+
+        return view('docentevista.index', compact('horarios'));
     }
 }
