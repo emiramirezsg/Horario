@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +6,22 @@
     <title>Editar Curso</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
-        /* Estilos para el formulario de edición */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
         .form-container {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad */
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             max-width: 500px;
             margin: 0 auto;
+            margin-top: 50px; /* Espacio superior para centrar verticalmente */
         }
 
         .form-container h2 {
@@ -43,19 +50,31 @@
             border-radius: 4px;
         }
 
-        .btn-submit {
+        .btn-submit, .btn-back {
             padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
             border: none;
             border-radius: 4px;
+            color: #fff;
             text-decoration: none;
-            cursor: pointer;
             transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .btn-submit {
+            background-color: #28a745;
         }
 
         .btn-submit:hover {
             background-color: #218838;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -70,6 +89,7 @@
                 <input type="text" id="nombre" name="nombre" value="{{ $curso->nombre }}" required>
             </div>
             <button type="submit" class="btn-submit">Guardar Cambios</button>
+            <a href="{{ route('cursos.index') }}" class="btn-back">Cancelar</a>
         </form>
     </div>
 </body>
