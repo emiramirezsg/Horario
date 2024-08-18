@@ -180,6 +180,9 @@
         <div class="center-image">
             <img src="https://prendimientocordoba.com/wp-content/uploads/2020/08/CabeceradDonBosco.jpg" alt="Central Image">
         </div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
         <button class="logout-btn" onclick="confirmLogout()">
             <img src="https://icons.veryicon.com/png/o/internet--web/website-icons/logout-8.png" alt="Cerrar sesión">
         </button>

@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/validar_registro', [LoginController::class, 'register'])->name('validar_registro');
 Route::post('/inicio_sesion', [LoginController::class, 'login'])->name('inicio_sesion');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
+Route::post('/logout', [Logincontroller::class, 'logout'])->name('logout');
 // Docentes Routes
 Route::resource('docentes', DocenteController::class);
 Route::get('/horarios', [DocenteController::class, 'horarios'])->name('docente.horarios');
