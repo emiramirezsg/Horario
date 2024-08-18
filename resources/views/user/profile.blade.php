@@ -29,15 +29,6 @@
             align-items: center;
         }
 
-        .user-info img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-right: 15px;
-            cursor: pointer;
-            border: 2px solid #fff;
-        }
-
         .user-info h2 {
             margin: 0;
             font-size: 1.8em;
@@ -100,8 +91,7 @@
         }
 
         .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="file"] {
+        .form-group input[type="email"] {
             width: 100%;
             padding: 12px;
             font-size: 1em;
@@ -130,7 +120,6 @@
 <body>
     <div class="user-bar">
         <div class="user-info">
-            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png' }}" alt="Perfil">
             <h2>{{ $user->name }}</h2>
         </div>
         <div class="center-image">
@@ -148,7 +137,7 @@
         @endif
 
         <!-- Formulario para actualizar perfil -->
-        <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.update') }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -160,11 +149,6 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="photo">Foto de Perfil</label>
-                <input type="file" id="photo" name="photo">
             </div>
 
             <button type="submit" class="btn-submit">Actualizar Perfil</button>

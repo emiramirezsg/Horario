@@ -30,19 +30,17 @@
             align-items: center;
         }
 
-        .user-info img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-right: 15px;
-            cursor: pointer;
-            border: 2px solid #fff;
-        }
-
         .user-info h2 {
             margin: 0;
             font-size: 1.8em;
             color: #fff;
+            cursor: pointer;
+            text-decoration: none; /* Elimina el subrayado */
+            transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
+        }
+
+        .user-info h2:hover {
+            transform: scale(1.1); /* Hace que el texto sea un 10% más grande al pasar el mouse */
         }
 
         .center-image {
@@ -177,8 +175,7 @@
 <body>
     <div class="user-bar">
         <div class="user-info">
-            <img src="{{ asset('https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png') }}" alt="Perfil" onclick="location.href='{{ route('user.profile') }}'">
-            <h2>{{ Auth::user()->name }}</h2>
+            <h2 onclick="location.href='{{ route('user.profile') }}'">{{ Auth::user()->name }}</h2>
         </div>
         <div class="center-image">
             <img src="https://prendimientocordoba.com/wp-content/uploads/2020/08/CabeceradDonBosco.jpg" alt="Central Image">
