@@ -93,7 +93,7 @@
             </div>
             <div class="form-group">
                 <label for="hrs_trabajo">Horas de Trabajo</label>
-                <input type="text" id="hrs_trabajo" name="hrs_trabajo" value="{{ str_replace(' horas', '', $categoria->hrs_trabajo) }}" required>
+                <input type="time" id="hrs_trabajo" name="hrs_trabajo" value="{{ $categoria->hrs_trabajo }}" required>
             </div>
             <div class="form-group">
                 <label for="dias_libres">Días Libres</label>

@@ -105,7 +105,7 @@
             </div>
             <div class="form-group">
                 <label for="hrs_trabajo">Horas de Trabajo</label>
-                <input type="text" id="hrs_trabajo" name="hrs_trabajo" required>
+                <input type="time" id="hrs_trabajo" name="hrs_trabajo" required>
                 <span class="suffix">hrs</span>
             </div>
             <div class="form-group">
