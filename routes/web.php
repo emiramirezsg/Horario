@@ -8,6 +8,7 @@ use App\Http\Controllers\AulaController;
 use App\Http\Controllers\ParaleloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HorarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -79,3 +80,6 @@ Route::get('/categorias/{categoria}', [CategoriaController::class, 'show'])->nam
 Route::get('/categorias/{categoria}/edit', [CategoriaController::class, 'edit'])->name('categorias.edit');
 Route::put('/categorias/{categoria}', [CategoriaController::class, 'update'])->name('categorias.update');
 Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
+
+// Horarios Routes
+Route::get('/horarios', [HorarioController::class, 'index'])->name('horarios.index');

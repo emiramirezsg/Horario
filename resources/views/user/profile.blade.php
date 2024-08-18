@@ -14,7 +14,7 @@
         }
 
         .user-bar {
-            background-color: #0000FF;
+            background-color: #3258ab;
             padding: 20px;
             color: #fff;
             display: flex;
@@ -44,12 +44,25 @@
             color: #fff;
         }
 
+        .center-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-image img {
+            max-height: 100px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
         .btn-back {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 40px; /* Ajusta el tamaño según tu imagen */
-            height: 40px; /* Ajusta el tamaño según tu imagen */
+            width: 40px;
+            height: 40px;
             background: url('{{ asset('images/back-icon.png') }}') no-repeat center center;
             background-size: contain;
             border: none;
@@ -117,10 +130,13 @@
 <body>
     <div class="user-bar">
         <div class="user-info">
-            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'path/to/default-profile-pic.png' }}" alt="Perfil">
+            <img src="{{ $user->photo ? asset('storage/' . $user->photo) : 'https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png' }}" alt="Perfil">
             <h2>{{ $user->name }}</h2>
         </div>
-        <img src="{{ asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkDar_h9O1yaYdgLYFY18ssocoNP948yK4Aw&s') }}" alt="Regresar" style="width: 60px; height: 60px; cursor: pointer;" onclick="location.href='{{ route('home') }}'">
+        <div class="center-image">
+            <img src="https://prendimientocordoba.com/wp-content/uploads/2020/08/CabeceradDonBosco.jpg" alt="Imagen Central">
+        </div>
+        <img src="{{ asset('https://www.svgrepo.com/show/18970/logout.svg') }}" alt="Regresar" style="width: 60px; height: 60px; cursor: pointer;" onclick="location.href='{{ route('home') }}'">
     </div>
 
     <div class="container">

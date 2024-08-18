@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/estiloshome.css">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background: url('https://img.freepik.com/fotos-premium/escena-estilo-anime-patio-escuela-escaleras-arboles-generativo-ai_1034036-8145.jpg') no-repeat center center fixed;
+            background-size: cover; /* Asegura que la imagen cubra todo el fondo */
             margin: 0;
             padding: 0;
+            height: 100vh; /* Ocupa toda la altura de la ventana */
         }
 
         .user-bar {
-            background-color: #0000FF;
+            background-color: #3258ab;
             padding: 20px;
             color: #fff;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
         }
@@ -45,22 +45,42 @@
             color: #fff;
         }
 
+        .center-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .center-image img {
+            max-height: 100px; /* Ajusta el tamaño según sea necesario */
+            max-width: 100%;
+            object-fit: contain;
+        }
+
         .logout-btn {
-            background: none;
+            background-color: #dc3545; /* Color de fondo del botón */
             border: none;
+            border-radius: 50%; /* Hace el botón circular */
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            color: #fff;
-            font-size: 1.5em;
-            padding: 0;
-            margin: 0;
             position: absolute;
             right: 20px;
             top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .logout-btn img {
-            width: 60px;
-            height: 60px;
+            width: 30px;
+            height: 30px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333; /* Color de fondo en hover */
         }
 
         .container {
@@ -160,8 +180,11 @@
             <img src="{{ asset('https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png') }}" alt="Perfil" onclick="location.href='{{ route('user.profile') }}'">
             <h2>{{ Auth::user()->name }}</h2>
         </div>
+        <div class="center-image">
+            <img src="https://prendimientocordoba.com/wp-content/uploads/2020/08/CabeceradDonBosco.jpg" alt="Central Image">
+        </div>
         <button class="logout-btn" onclick="confirmLogout()">
-            <img src="https://w7.pngwing.com/pngs/655/512/png-transparent-computer-icons-log-out-miscellaneous-rectangle-sign-thumbnail.png" alt="Cerrar sesión">
+            <img src="https://icons.veryicon.com/png/o/internet--web/website-icons/logout-8.png" alt="Cerrar sesión">
         </button>
     </div>
 
@@ -216,19 +239,18 @@
 
         <!-- Tarjeta de Paralelos -->
         <div class="card">
-            <img src="https://www.bizneo.com/blog/wp-content/uploads/2022/03/programa-de-control-horario.jpg" alt="Paralelos">
+            <img src="https://www.bizneo.com/blog/wp-content/uploads/2022/03/programa-de-control-horario.jpg" alt="Horarios">
             <div class="card-content">
                 <h2>Horarios</h2>
                 <div class="card-actions">
-                    <a href="{{ route('paralelos.index') }}" class="btn btn-view">Ver Todos</a>
-                    <a href="{{ route('paralelos.create') }}" class="btn btn-manage">Agregar Paralelo</a>
+                    <a href="{{ route('horarios.index') }}" class="btn btn-view">Ver Todos</a>
                 </div>
             </div>
         </div>
 
         <!-- Tarjeta de Categorías -->
         <div class="card">
-            <img src="path/to/categorias-icon.png" alt="Categorías">
+            <img src="https://slideplayer.es/slide/4676983/14/images/4/ASCENSO+DOCENTE+A+B+C+D+E+F+G+H+I+J+Ascenso+Ordinario%3A.jpg" alt="Categorías">
             <div class="card-content">
                 <h2>Categorías</h2>
                 <div class="card-actions">
@@ -241,9 +263,8 @@
 
     <script>
         function confirmLogout() {
-            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                // Asume que la ruta de logout es la estándar de Laravel
-                window.location.href = '{{ route('logout') }}';
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                document.getElementById('logout-form').submit();
             }
         }
     </script>
