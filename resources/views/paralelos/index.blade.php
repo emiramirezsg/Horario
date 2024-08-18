@@ -9,54 +9,77 @@
         /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
 
         .container {
-            width: 90%;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 40px auto;
             padding: 20px;
         }
 
-        h2 {
-            margin: 0;
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Estilos para el botón de regresar */
-        .btn-back {
+        /* Estilos para los botones */
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
-            background-color: #6c757d;
-            color: #fff;
-            border: none;
             border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s ease;
-            display: inline-block;
-            margin-bottom: 20px;
+            margin: 10px;
         }
 
-        .btn-back:hover {
+        .btn-back, .btn-paralelos {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-back:hover, .btn-paralelos:hover {
             background-color: #5a6268;
         }
 
-        .btn-back-container {
-            text-align: right;
+        .btn-agregar-paralelo {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-agregar-paralelo:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-editar {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-editar:hover {
+            background-color: #218838;
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #c82333;
         }
 
         /* Estilos para las tarjetas de paralelos */
+        .paralelos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
         .paralelo-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
             padding: 20px;
             transition: transform 0.3s ease;
+            width: calc(33.333% - 20px); /* Ajustar el ancho y espacio entre tarjetas */
+            box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
         }
 
         .paralelo-card:hover {
@@ -76,75 +99,83 @@
             color: #666;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            margin-right: 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-editar {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        .btn-eliminar {
-            background-color: #dc3545;
-            color: #fff;
-        }
-
-        .btn:hover {
-            background-color: #6c757d;
-        }
-
-        .btn-agregar-paralelo {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-agregar-paralelo:hover {
-            background-color: #0056b3;
-        }
-
-        /* Estilos para alinear los paralelos por curso */
-        .paralelos {
+        .botones {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .paralelo-card {
-            flex: 1 1 calc(33.333% - 20px);
-            box-sizing: border-box;
+        /* Estilos para los modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+
+        .modal-header, .modal-footer {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #ddd;
+            text-align: right;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .modal-close:hover {
+            color: #dc3545;
+        }
+
+        .modal-body {
+            margin: 15px 0;
         }
 
         /* Ajustes para tamaños de pantalla más pequeñas */
         @media (max-width: 768px) {
             .paralelo-card {
-                flex: 1 1 calc(50% - 20px);
+                width: calc(50% - 20px);
             }
         }
 
         @media (max-width: 480px) {
             .paralelo-card {
-                flex: 1 1 100%;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
+    <a href="{{ route('cursos.index') }}" class="btn btn-paralelos">Cursos</a>
+    <a href="{{ route('home') }}" class="btn btn-back">Inicio</a>
+    
     <div class="container">
-        <div class="btn-back-container">
-            <a href="{{ route('cursos.index') }}" class="btn btn-back">Regresar</a>
-        </div>
         <h2>Lista de Paralelos</h2>
         <div class="paralelos">
             @foreach($paralelos as $paralelo)
@@ -155,17 +186,102 @@
                     <p><strong>Curso:</strong> {{ $paralelo->curso->nombre }}</p>
                 </div>
                 <div class="botones">
-                    <a href="{{ route('paralelos.edit', $paralelo->id) }}" class="btn btn-editar">Editar</a>
+                    <a href="#modalEditarParalelo" class="btn btn-editar open-modal" data-paralelo-id="{{ $paralelo->id }}" data-paralelo-nombre="{{ $paralelo->nombre }}" data-paralelo-cantidad="{{ $paralelo->cantidad_est }}" title="Editar Paralelo">Editar</a>
                     <form action="{{ route('paralelos.destroy', $paralelo->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de querer eliminar este paralelo?')">Eliminar</button>
+                        <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de querer eliminar este paralelo?')" title="Eliminar Paralelo">Eliminar</button>
                     </form>
                 </div>
             </div>
             @endforeach
         </div>
-        <a href="{{ route('paralelos.create') }}" class="btn btn-agregar-paralelo">Agregar Paralelo</a>
+        <a href="#modalAgregarParalelo" class="btn btn-agregar-paralelo open-modal">Agregar Paralelo</a>
     </div>
+
+    <!-- Modal Agregar Paralelo -->
+    <div id="modalAgregarParalelo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal('modalAgregarParalelo')">&times;</span>
+                <h2>Agregar Paralelo</h2>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarParalelo" method="POST">
+                    @csrf
+                    <input type="hidden" id="curso-id" name="curso_id">
+                    <div class="form-group">
+                        <label for="nombre-paralelo">Nombre del Paralelo</label>
+                        <input type="text" id="nombre-paralelo" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad-estudiantes">Cantidad de Estudiantes</label>
+                        <input type="number" id="cantidad-estudiantes" name="cantidad_est" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Agregar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancelar" onclick="closeModal('modalAgregarParalelo')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Paralelo -->
+    <div id="modalEditarParalelo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal('modalEditarParalelo')">&times;</span>
+                <h2>Editar Paralelo</h2>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarParalelo" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="nombre-paralelo-edit">Nombre del Paralelo</label>
+                        <input type="text" id="nombre-paralelo-edit" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad-estudiantes-edit">Cantidad de Estudiantes</label>
+                        <input type="number" id="cantidad-estudiantes-edit" name="cantidad_est" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Guardar Cambios</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancelar" onclick="closeModal('modalEditarParalelo')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.open-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal');
+                const paraleloId = this.getAttribute('data-paralelo-id');
+                const paraleloNombre = this.getAttribute('data-paralelo-nombre');
+                const paraleloCantidad = this.getAttribute('data-paralelo-cantidad');
+                if (modalId === 'modalEditarParalelo') {
+                    document.getElementById('formEditarParalelo').action = `/paralelos/${paraleloId}`;
+                    document.getElementById('nombre-paralelo-edit').value = paraleloNombre;
+                    document.getElementById('cantidad-estudiantes-edit').value = paraleloCantidad;
+                } else if (modalId === 'modalAgregarParalelo') {
+                    document.getElementById('curso-id').value = this.getAttribute('data-curso-id');
+                }
+                document.getElementById(modalId).style.display = 'block';
+            });
+        });
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

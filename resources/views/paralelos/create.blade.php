@@ -100,7 +100,7 @@
                 </select>
             </div>
             <button type="submit" class="btn-submit">Agregar Paralelo</button>
-            <a href="{{ route('paralelos.index') }}" class="btn-back">Cancelar</a>
+            <a href="{{ route('cursos.index') }}" class="btn-back">Cancelar</a>
         </form>
     </div>
 </body>

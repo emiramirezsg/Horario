@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->integer('cantidad_aulas');
+            $table->string('cantidad_sillas');
+            $table->string('cantidad_mesas');
             $table->timestamps();
         });
     

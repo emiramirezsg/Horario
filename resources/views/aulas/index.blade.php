@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +6,36 @@
     <title>Lista de Aulas</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            position: relative;
+        }
+
         /* Estilos para las tarjetas de aulas */
+        .aulas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
         .aula-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
             padding: 20px;
             transition: transform 0.3s ease;
+            position: relative;
+            width: calc(33.333% - 20px); /* Ajustar el ancho y espacio entre tarjetas */
+            box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
         }
 
         .aula-card:hover {
@@ -34,10 +55,15 @@
             color: #666;
         }
 
+        .botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
         .btn {
             display: inline-block;
             padding: 8px 16px;
-            margin-right: 10px;
             border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s ease;
@@ -48,13 +74,17 @@
             color: #fff;
         }
 
+        .btn-editar:hover {
+            background-color: #218838;
+        }
+
         .btn-eliminar {
             background-color: #dc3545;
             color: #fff;
         }
 
-        .btn:hover {
-            background-color: #6c757d;
+        .btn-eliminar:hover {
+            background-color: #c82333;
         }
 
         .btn-agregar-aula {
@@ -65,22 +95,51 @@
             border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
         }
 
         .btn-agregar-aula:hover {
             background-color: #0056b3;
         }
+
+        .btn-regresar {
+            background-color: #6c757d;
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .btn-regresar:hover {
+            background-color: #5a6268;
+        }
+
+        .aula-count {
+            font-size: 1.2em;
+            color: #333;
+            margin-left: 15px;
+        }
     </style>
 </head>
 <body>
+    <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
+
     <div class="container">
-        <h2>Lista de Aulas</h2>
+        <div style="display: flex; align-items: center;">
+            <h2>Lista de Aulas</h2>
+            <span class="aula-count">Cantidad de Aulas: {{ $aulas->count() }}</span>
+        </div>
         <div class="aulas">
             @foreach($aulas as $aula)
             <div class="aula-card">
                 <div class="aula-info">
                     <h3>{{ $aula->nombre }}</h3>
-                    <p><strong>Cantidad:</strong> {{ $aula->cantidad_aulas }}</p>
+                    <p><strong>Cantidad de Sillas:</strong> {{ $aula->cantidad_sillas }}</p>
+                    <p><strong>Cantidad de Mesas:</strong> {{ $aula->cantidad_mesas }}</p>
                 </div>
                 <div class="botones">
                     <a href="{{ route('aulas.edit', $aula->id) }}" class="btn btn-editar">Editar</a>

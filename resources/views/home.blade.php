@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-image: src="{{ asset('https://img.freepik.com/vector-gratis/patio-al-aire-libre-escuela-vacia_1308-51422.jpg?semt=ais_hybrid') }}";
+            background: url('https://www.orientacionandujar.es/wp-content/uploads/2020/08/fondos-para-clases-virtuales-1.jpg') no-repeat center center fixed;
             margin: 0;
             padding: 0;
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Aula;
@@ -21,7 +22,8 @@ class AulaController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
-            'cantidad_aulas' => 'required|integer',
+            'cantidad_sillas' => 'required|integer',
+            'cantidad_mesas' => 'required|integer',
         ]);
 
         Aula::create($validated);
@@ -43,7 +45,8 @@ class AulaController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
-            'cantidad_aulas' => 'required|integer',
+            'cantidad_sillas' => 'required|integer',
+            'cantidad_mesas' => 'required|integer',
         ]);
 
         $aula->update($validated);

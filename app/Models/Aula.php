@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Aula extends Model
 {
-    protected $fillable = ['nombre', 'cantidad_aulas'];
+    protected $fillable = ['nombre', 'cantidad_aulas', 'cantidad_sillas', 'cantidad_mesas'];
 
     public function horarios()
     {

@@ -109,18 +109,25 @@
             background-color: #0056b3;
         }
 
-        .btn-regresar {
+        .btn-regresar, .btn-paralelos {
             background-color: #6c757d;
             color: #fff;
             position: absolute;
             top: 20px;
-            right: 20px;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 4px;
         }
 
-        .btn-regresar:hover {
+        .btn-regresar {
+            right: 120px; /* Ajusta para el espacio entre botones */
+        }
+
+        .btn-paralelos {
+            right: 20px;
+        }
+
+        .btn-regresar:hover, .btn-paralelos:hover {
             background-color: #5a6268;
         }
 
@@ -134,6 +141,35 @@
             padding: 10px;
             margin-bottom: 5px;
             border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-editar-paralelo, .btn-eliminar-paralelo {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-block;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .btn-editar-paralelo {
+            background-image: url('https://img.icons8.com/material-outlined/24/000000/edit--v1.png');
+        }
+
+        .btn-eliminar-paralelo {
+            background-image: url('https://img.icons8.com/material-outlined/24/000000/delete-forever.png');
+        }
+
+        .btn-editar-paralelo:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-eliminar-paralelo:hover {
+            background-color: #c82333;
         }
 
         /* Estilos para los modales */
@@ -190,6 +226,7 @@
     </style>
 </head>
 <body>
+    <a href="{{ route('paralelos.index') }}" class="btn btn-paralelos">Paralelos</a>
     <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
     
     <div class="container">
@@ -204,6 +241,14 @@
                         @forelse($curso->paralelos as $paralelo)
                         <div class="paralelo-item">
                             {{ $paralelo->nombre }} - Cantidad de Estudiantes: {{ $paralelo->cantidad_est }}
+                            <div class="botones">
+                                <a href="#modalEditarParalelo" class="btn-editar-paralelo open-modal" data-paralelo-id="{{ $paralelo->id }}" data-paralelo-nombre="{{ $paralelo->nombre }}" data-paralelo-cantidad="{{ $paralelo->cantidad_est }}" title="Editar Paralelo"></a>
+                                <form action="{{ route('paralelos.destroy', $paralelo->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-eliminar-paralelo" onclick="return confirm('¿Estás seguro de querer eliminar este paralelo?')" title="Eliminar Paralelo"></button>
+                                </form>
+                            </div>
                         </div>
                         @empty
                         <p>No hay paralelos asignados a este curso.</p>
@@ -222,7 +267,6 @@
             </div>
             @endforeach
         </div>
-        <a href="#modalCrearCurso" class="btn btn-agregar-curso open-modal">Agregar Curso</a>
     </div>
 
     <!-- Modal Crear Curso -->
@@ -233,13 +277,13 @@
                 <h2>Crear Curso</h2>
             </div>
             <div class="modal-body">
-                <form action="{{ route('cursos.store') }}" method="POST">
+                <form id="formCrearCurso" method="POST" action="{{ route('cursos.store') }}">
                     @csrf
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" required>
                     </div>
-                    <button type="submit" class="btn btn-submit">Guardar</button>
+                    <button type="submit" class="btn btn-submit">Crear Curso</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -260,7 +304,7 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="nombre">Nombre</label>
+                        <label for="nombre-edit">Nombre</label>
                         <input type="text" id="nombre-edit" name="nombre" required>
                     </div>
                     <button type="submit" class="btn btn-submit">Guardar Cambios</button>
@@ -282,7 +326,7 @@
             <div class="modal-body">
                 <form id="formAgregarParalelo" method="POST">
                     @csrf
-                    <input type="hidden" name="curso_id" id="curso-id">
+                    <input type="hidden" id="curso-id" name="curso_id">
                     <div class="form-group">
                         <label for="nombre-paralelo">Nombre del Paralelo</label>
                         <input type="text" id="nombre-paralelo" name="nombre" required>
@@ -291,7 +335,7 @@
                         <label for="cantidad-estudiantes">Cantidad de Estudiantes</label>
                         <input type="number" id="cantidad-estudiantes" name="cantidad_est" required>
                     </div>
-                    <button type="submit" class="btn btn-submit">Guardar</button>
+                    <button type="submit" class="btn btn-submit">Agregar</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -300,26 +344,61 @@
         </div>
     </div>
 
+    <!-- Modal Editar Paralelo -->
+    <div id="modalEditarParalelo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close" onclick="closeModal('modalEditarParalelo')">&times;</span>
+                <h2>Editar Paralelo</h2>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarParalelo" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="nombre-paralelo-edit">Nombre del Paralelo</label>
+                        <input type="text" id="nombre-paralelo-edit" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad-estudiantes-edit">Cantidad de Estudiantes</label>
+                        <input type="number" id="cantidad-estudiantes-edit" name="cantidad_est" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Guardar Cambios</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancelar" onclick="closeModal('modalEditarParalelo')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+            document.getElementById(modalId).style.display = "block";
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            document.getElementById(modalId).style.display = "none";
         }
 
         document.querySelectorAll('.open-modal').forEach(button => {
             button.addEventListener('click', function() {
                 const modalId = this.getAttribute('href').substring(1);
+                const paraleloId = this.getAttribute('data-paralelo-id');
+                const paraleloNombre = this.getAttribute('data-paralelo-nombre');
+                const paraleloCantidad = this.getAttribute('data-paralelo-cantidad');
                 const cursoId = this.getAttribute('data-curso-id');
-                const cursoNombre = this.getAttribute('data-curso-nombre');
+                
                 if (modalId === 'modalEditarCurso') {
                     document.getElementById('formEditarCurso').action = `/cursos/${cursoId}`;
-                    document.getElementById('nombre-edit').value = cursoNombre;
+                    document.getElementById('nombre-edit').value = this.getAttribute('data-curso-nombre');
                 } else if (modalId === 'modalAgregarParalelo') {
                     document.getElementById('formAgregarParalelo').action = `/paralelos`;
                     document.getElementById('curso-id').value = cursoId;
+                } else if (modalId === 'modalEditarParalelo') {
+                    document.getElementById('formEditarParalelo').action = `/paralelos/${paraleloId}`;
+                    document.getElementById('nombre-paralelo-edit').value = paraleloNombre;
+                    document.getElementById('cantidad-estudiantes-edit').value = paraleloCantidad;
                 }
                 openModal(modalId);
             });
