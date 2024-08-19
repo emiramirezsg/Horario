@@ -44,9 +44,9 @@ class CreateUsersTable extends Migration
     
         Schema::create('periodos', function (Blueprint $table) {
             $table->id();
+            $table->string('dia');
             $table->time('hora_inicio');
             $table->time('hora_fin');
-            $table->string('dia');
             $table->timestamps();
         });
     
@@ -69,7 +69,6 @@ class CreateUsersTable extends Migration
         Schema::create('materias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->foreignId('curso_id')->constrained('cursos');
             $table->timestamps();
         });
     
@@ -95,6 +94,19 @@ class CreateUsersTable extends Migration
             $table->foreignId('curso_id')->constrained('cursos');
             $table->timestamps();
         });
+        Schema::create('docente_paralelo', function (Blueprint $table){
+            $table->id();
+            $table->foreignId('docente_id')->constrained('docentes');
+            $table->foreignId('paralelo_id')->constrained('paralelos');
+            $table->timestamps();
+        });
+        Schema::create('materia_curso', function (Blueprint $table){
+            $table->id();
+            $table->integer('cantidad_horas_semanales');
+            $table->foreignId('materia_id')->constrained('materias');
+            $table->foreignId('curso_id')->constrained('cursos');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -104,9 +116,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('materia_curso');
+        Schema::dropIfExists('docente_paralelo');
+        Schema::dropIfExists('paralelos');
         Schema::dropIfExists('horarios');
         Schema::dropIfExists('docente_materia');
-        Schema::dropIfExists('paralelos');
         Schema::dropIfExists('docentes');
         Schema::dropIfExists('materias');
         Schema::dropIfExists('cursos');

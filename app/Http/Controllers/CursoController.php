@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Curso;
+use App\Models\Materia;
 use App\Models\Paralelo;
 use Illuminate\Http\Request;
 
@@ -9,9 +10,9 @@ class CursoController extends Controller
 {
     public function index()
     {
-        // Obtener todos los cursos con sus paralelos
+        $materias = Materia::all();
         $cursos = Curso::with('paralelos')->get();
-        return view('cursos.index', compact('cursos'));
+        return view('cursos.index', compact('cursos','materias'));
     }
 
     public function create()
@@ -59,4 +60,14 @@ class CursoController extends Controller
 
         return redirect()->route('cursos.index');
     }
+    public function asignarMaterias(Request $request, $curso_id)
+{
+    $curso = Curso::findOrFail($curso_id);
+    $materias = $request->input('materias');
+    $curso->materias()->sync($materias);
+
+    return redirect()->route('cursos.index')->with('success', 'Materias asignadas correctamente');
+}
+
+
 }

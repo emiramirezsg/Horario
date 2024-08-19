@@ -11,4 +11,5 @@ class DocenteMateria extends Pivot
     {
         return $this->hasMany(Horario::class);
     }
+    
 }

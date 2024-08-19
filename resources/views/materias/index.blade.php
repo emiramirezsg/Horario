@@ -125,8 +125,6 @@
             <div class="materia-card">
                 <div class="materia-info">
                     <h3>{{ $materia->nombre }}</h3>
-                    <p><strong>Curso:</strong> {{ $materia->curso->nombre }}</p>
-                    <p><strong>Docente:</strong> {{ $materia->docente->nombre }}</p>
                 </div>
                 <div class="botones">
                     <button class="btn btn-editar" data-bs-toggle="modal" data-bs-target="#editModal-{{ $materia->id }}">Editar</button>
@@ -154,26 +152,6 @@
                                     <label for="nombre-{{ $materia->id }}">Nombre</label>
                                     <input type="text" id="nombre-{{ $materia->id }}" name="nombre" value="{{ $materia->nombre }}" class="form-control" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="curso_id-{{ $materia->id }}">Curso</label>
-                                    <select id="curso_id-{{ $materia->id }}" name="curso_id" class="form-control" required>
-                                        @foreach($cursos as $curso)
-                                        <option value="{{ $curso->id }}" {{ $curso->id == $materia->curso_id ? 'selected' : '' }}>
-                                            {{ $curso->nombre }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="docente_id-{{ $materia->id }}">Docente</label>
-                                    <select id="docente_id-{{ $materia->id }}" name="docente_id" class="form-control" required>
-                                        @foreach($docentes as $docente)
-                                        <option value="{{ $docente->id }}" {{ $docente->id == $materia->docente_id ? 'selected' : '' }}>
-                                            {{ $docente->nombre }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
                             </form>
                         </div>
@@ -200,23 +178,8 @@
                                 <label for="nombre">Nombre</label>
                                 <input type="text" id="nombre" name="nombre" class="form-control" required>
                             </div>
-                            <div class="form-group">
-                                <label for="curso_id">Curso</label>
-                                <select id="curso_id" name="curso_id" class="form-control" required>
-                                    @foreach($cursos as $curso)
-                                    <option value="{{ $curso->id }}">{{ $curso->nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="docente_id">Docente</label>
-                                <select id="docente_id" name="docente_id" class="form-control" required>
-                                    @foreach($docentes as $docente)
-                                    <option value="{{ $docente->id }}">{{ $docente->nombre }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <button type="submit" class="btn btn-primary mt-3">Crear Materia</button>
+                            <a href="{{ route('materias.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
                         </form>
                     </div>
                 </div>

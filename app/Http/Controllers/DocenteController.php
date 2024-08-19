@@ -55,7 +55,13 @@ class DocenteController extends Controller
 
     public function show(Docente $docente)
     {
-        return view('docentes.show', compact('docente'));
+        $docente = Docente::with('materias')->find($id); // Usa `with` para evitar consultas adicionales
+        if (!$docente) {
+            abort(404, 'Docente no encontrado');
+        }
+        $materias = $docente->materias;
+
+        return view('docente.show', compact('docente', 'materias'));
     }
 
     public function edit(Docente $docente)

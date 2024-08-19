@@ -10,58 +10,54 @@ class MateriaController extends Controller
 {
     public function index()
     {
-        $materias = Materia::with('curso', 'docente')->get();
-        $cursos = Curso::all(); // Obtener todos los cursos
-        $docentes = Docente::all(); // Obtener todos los docentes
-
-        return view('materias.index', compact('materias', 'cursos', 'docentes'));
+        $materias = Materia::all(); 
+        return view('materias.index', compact('materias'));
     }
 
     public function create()
     {
-        $cursos = Curso::all();
-        return view('materias.create', compact('cursos'));
+        return view('materias.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'curso_id' => 'required|exists:cursos,id',
+        $validatedData = $request->validate([
+            'nombre' => 'required',
         ]);
 
-        Materia::create($validated);
+        Materia::create($validatedData);
 
-        return redirect()->route('materias.index');
+        return redirect()->route('materias.index')->with('success', 'Materia creada exitosamente.');
     }
 
     public function show(Materia $materia)
     {
-        return view('materias.show', compact('materia'));
+        $materia->load('docente'); // Usa `load` para evitar consultas adicionales
+        $docentes = Docente::all(); // Si necesitas mostrar todos los docentes
+
+        return view('materias.show', compact('materia', 'docentes'));
     }
 
     public function edit(Materia $materia)
     {
-        $cursos = Curso::all();
-        return view('materias.edit', compact('materia', 'cursos'));
+        return view('materias.edit', compact('materia'));
     }
 
     public function update(Request $request, Materia $materia)
     {
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'curso_id' => 'required|exists:cursos,id',
+            'nombre' => 'required',
         ]);
 
         $materia->update($validated);
 
-        return redirect()->route('materias.index');
+        return redirect()->route('materias.index')->with('success', 'Materia actualizada exitosamente.');
     }
 
     public function destroy(Materia $materia)
     {
         $materia->delete();
 
-        return redirect()->route('materias.index');
+        return redirect()->route('materias.index')->with('success', 'Materia eliminada exitosamente.');
     }
 }

@@ -93,3 +93,5 @@ Route::middleware(['auth', 'is_docente'])->group(function () {
     Route::get('/docente/hours', [DocenteController::class, 'index'])->name('docente.hours');
     // Otras rutas para docentes
 });
+
+Route::put('/cursos/{curso_id}/asignar-materias', [CursoController::class, 'asignarMaterias'])->name('cursos.asignarMaterias');

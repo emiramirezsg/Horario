@@ -242,11 +242,10 @@
                         <div class="paralelo-item">
                             {{ $paralelo->nombre }} - Cantidad de Estudiantes: {{ $paralelo->cantidad_est }}
                             <div class="botones">
-                                <a href="#modalEditarParalelo" class="btn-editar-paralelo open-modal" data-paralelo-id="{{ $paralelo->id }}" data-paralelo-nombre="{{ $paralelo->nombre }}" data-paralelo-cantidad="{{ $paralelo->cantidad_est }}" title="Editar Paralelo"></a>
-                                <form action="{{ route('paralelos.destroy', $paralelo->id) }}" method="POST" style="display: inline;">
+                                <form action="{{ route('paralelos.destroy', $paralelo->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-eliminar-paralelo" onclick="return confirm('¿Estás seguro de querer eliminar este paralelo?')" title="Eliminar Paralelo"></button>
+                                    <button type="submit" class="btn btn-eliminar-paralelo" title="Eliminar Paralelo"></button>
                                 </form>
                             </div>
                         </div>
@@ -256,159 +255,101 @@
                     </div>
                 </div>
                 <div class="botones">
-                    <a href="#modalAgregarParalelo" class="btn btn-agregar-paralelo open-modal" data-curso-id="{{ $curso->id }}">Agregar Paralelo</a>
-                    <a href="#modalEditarCurso" class="btn btn-editar open-modal" data-curso-id="{{ $curso->id }}" data-curso-nombre="{{ $curso->nombre }}">Editar</a>
-                    <form action="{{ route('cursos.destroy', $curso->id) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de querer eliminar este curso?')">Eliminar</button>
-                    </form>
+                    <a href="{{ route('cursos.edit', $curso) }}" class="btn btn-editar">Editar</a>
+                    <a href="#" class="btn btn-agregar-paralelo" data-curso-id="{{ $curso->id }}" onclick="openAssignModal({{ $curso->id }})">Asignar Materias</a>
+                    <a href="#" class="btn btn-agregar-paralelo" data-curso-id="{{ $curso->id }}" onclick="openAddParaleloModal({{ $curso->id }})">Agregar Paralelo</a>
                 </div>
             </div>
             @endforeach
         </div>
+        <a href="{{ route('cursos.create') }}" class="btn btn-agregar-curso">Agregar Curso</a>
     </div>
 
-    <!-- Modal Crear Curso -->
-    <div id="modalCrearCurso" class="modal">
+    <!-- Modal para asignar materias -->
+    <div id="modalAsignarMaterias" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="modal-close" onclick="closeModal('modalCrearCurso')">&times;</span>
-                <h2>Crear Curso</h2>
+                <span class="modal-close" id="closeModalAsignarMaterias">&times;</span>
+                <h2>Asignar Materias</h2>
             </div>
             <div class="modal-body">
-                <form id="formCrearCurso" method="POST" action="{{ route('cursos.store') }}">
+                <form id="formAsignarMaterias" method="POST">
                     @csrf
+                    @method('POST')
                     <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                        <label for="materias">Seleccione Materias:</label>
+                        <select id="materias" name="materias[]" multiple>
+                            @foreach($materias as $materia)
+                            <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-submit">Crear Curso</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Asignar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancelar" onclick="closeModal('modalCrearCurso')">Cancelar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Editar Curso -->
-    <div id="modalEditarCurso" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="modal-close" onclick="closeModal('modalEditarCurso')">&times;</span>
-                <h2>Editar Curso</h2>
-            </div>
-            <div class="modal-body">
-                <form id="formEditarCurso" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="nombre-edit">Nombre</label>
-                        <input type="text" id="nombre-edit" name="nombre" required>
-                    </div>
-                    <button type="submit" class="btn btn-submit">Guardar Cambios</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancelar" onclick="closeModal('modalEditarCurso')">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Agregar Paralelo -->
+    <!-- Modal para agregar paralelos -->
     <div id="modalAgregarParalelo" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="modal-close" onclick="closeModal('modalAgregarParalelo')">&times;</span>
+                <span class="modal-close" id="closeModalAgregarParalelo">&times;</span>
                 <h2>Agregar Paralelo</h2>
             </div>
             <div class="modal-body">
-                <form id="formAgregarParalelo" method="POST">
+                <form id="formAgregarParalelo" method="POST" action="{{ route('paralelos.store') }}">
                     @csrf
-                    <input type="hidden" id="curso-id" name="curso_id">
+                    <input type="hidden" name="curso_id" id="cursoId">
                     <div class="form-group">
-                        <label for="nombre-paralelo">Nombre del Paralelo</label>
-                        <input type="text" id="nombre-paralelo" name="nombre" required>
+                        <label for="nombre">Nombre del Paralelo:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="cantidad-estudiantes">Cantidad de Estudiantes</label>
-                        <input type="number" id="cantidad-estudiantes" name="cantidad_est" required>
+                        <label for="cantidad_est">Cantidad de Estudiantes:</label>
+                        <input type="number" name="cantidad_est" id="cantidad_est" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-submit">Agregar</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Agregar Paralelo</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancelar" onclick="closeModal('modalAgregarParalelo')">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Paralelo -->
-    <div id="modalEditarParalelo" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="modal-close" onclick="closeModal('modalEditarParalelo')">&times;</span>
-                <h2>Editar Paralelo</h2>
-            </div>
-            <div class="modal-body">
-                <form id="formEditarParalelo" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="nombre-paralelo-edit">Nombre del Paralelo</label>
-                        <input type="text" id="nombre-paralelo-edit" name="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidad-estudiantes-edit">Cantidad de Estudiantes</label>
-                        <input type="number" id="cantidad-estudiantes-edit" name="cantidad_est" required>
-                    </div>
-                    <button type="submit" class="btn btn-submit">Guardar Cambios</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancelar" onclick="closeModal('modalEditarParalelo')">Cancelar</button>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = "block";
+        // Funciones para abrir y cerrar modales
+        function openAssignModal(cursoId) {
+            const form = document.getElementById('formAsignarMaterias');
+            form.action = `/cursos/${cursoId}/asignarMaterias`;
+            document.getElementById('modalAsignarMaterias').style.display = 'block';
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
+        function openAddParaleloModal(cursoId) {
+            document.getElementById('cursoId').value = cursoId;
+            document.getElementById('modalAgregarParalelo').style.display = 'block';
         }
 
-        document.querySelectorAll('.open-modal').forEach(button => {
-            button.addEventListener('click', function() {
-                const modalId = this.getAttribute('href').substring(1);
-                const paraleloId = this.getAttribute('data-paralelo-id');
-                const paraleloNombre = this.getAttribute('data-paralelo-nombre');
-                const paraleloCantidad = this.getAttribute('data-paralelo-cantidad');
-                const cursoId = this.getAttribute('data-curso-id');
-                
-                if (modalId === 'modalEditarCurso') {
-                    document.getElementById('formEditarCurso').action = `/cursos/${cursoId}`;
-                    document.getElementById('nombre-edit').value = this.getAttribute('data-curso-nombre');
-                } else if (modalId === 'modalAgregarParalelo') {
-                    document.getElementById('formAgregarParalelo').action = `/paralelos`;
-                    document.getElementById('curso-id').value = cursoId;
-                } else if (modalId === 'modalEditarParalelo') {
-                    document.getElementById('formEditarParalelo').action = `/paralelos/${paraleloId}`;
-                    document.getElementById('nombre-paralelo-edit').value = paraleloNombre;
-                    document.getElementById('cantidad-estudiantes-edit').value = paraleloCantidad;
-                }
-                openModal(modalId);
-            });
-        });
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
 
-        window.addEventListener('click', function(event) {
+        // Eventos para cerrar los modales
+        document.getElementById('closeModalAsignarMaterias').onclick = function() {
+            closeModal('modalAsignarMaterias');
+        }
+
+        document.getElementById('closeModalAgregarParalelo').onclick = function() {
+            closeModal('modalAgregarParalelo');
+        }
+
+        window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 closeModal(event.target.id);
             }
-        });
+        }
     </script>
 </body>
 </html>

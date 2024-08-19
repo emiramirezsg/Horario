@@ -12,6 +12,11 @@ class Docente extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    public function paralelos()
+    {
+        return $this->belongsToMany(Paralelo::class, 'docente_paralelo');
+    }
+
     public function materias()
     {
         return $this->belongsToMany(Materia::class, 'docente_materia');
