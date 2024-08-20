@@ -26,11 +26,11 @@ class DocenteController extends Controller
     {
         // Validar la solicitud
         $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
+            'nombre' => 'required|',
+            'apellido' => 'required|',
+            'email' => 'required|email|unique:users,email',
             'categoria_id' => 'required|exists:categorias,id',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|confirmed',
         ]);
 
         // Crear el usuario
