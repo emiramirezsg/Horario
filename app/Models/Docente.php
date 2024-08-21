@@ -24,7 +24,7 @@ class Docente extends Model
 
     public function horarios()
     {
-        return $this->hasManyThrough(Horario::class, DocenteMateria::class);
+        return $this->hasManyThrough(Horario::class, DocenteMateria::class, 'docente_id', 'docente_materia_id', 'id', 'id');
     }
     public function user()
     {
