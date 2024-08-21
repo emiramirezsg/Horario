@@ -22,13 +22,17 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:255',
+        // Validar los datos del formulario
+        $request->validate([
+            'nombre' => 'required|unique:cursos|max:255',
         ]);
 
-        Curso::create($validated);
+        // Crear un nuevo curso
+        $curso = new Curso();
+        $curso->nombre = $request->input('nombre');
+        $curso->save();
 
-        return redirect()->route('cursos.index');
+        return redirect()->route('cursos.index')->with('success', 'Curso creado exitosamente.');
     }
 
     public function show(Curso $curso)

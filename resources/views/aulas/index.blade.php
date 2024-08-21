@@ -106,12 +106,13 @@
         .btn-regresar {
             background-color: #6c757d;
             color: #fff;
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 4px;
+            z-index: 1000;
         }
 
         .btn-regresar:hover {

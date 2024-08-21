@@ -28,7 +28,6 @@ class CreateUsersTable extends Migration
         Schema::create('aulas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('cantidad_aulas');
             $table->string('cantidad_sillas');
             $table->string('cantidad_mesas');
             $table->timestamps();

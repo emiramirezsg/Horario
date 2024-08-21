@@ -113,7 +113,7 @@
                 <input type="number" id="cantidad_mesas" name="cantidad_mesas" required>
             </div>
             <button type="submit" class="btn-submit">Guardar</button>
-            <a href="{{ route('categorias.index') }}" class="btn-cancel">Cancelar</a>
+            <a href="{{ route('aulas.index') }}" class="btn-cancel">Cancelar</a>
         </form>
     </div>
 </body>
