@@ -55,6 +55,9 @@ class Logincontroller extends Controller
 
         if(Auth::attempt($credentials,$remember)){
             $request->session()->regenerate();
+            if(Auth::user()->role == 'docente'){
+                return redirect()->intended(route('docente.horarios'));
+            }else{}
             return redirect()->intended(route('home'));
         }else{
             return redirect('login');
