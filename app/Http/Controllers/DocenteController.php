@@ -40,6 +40,7 @@ class DocenteController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'is_docente' => true, // Asegúrate de marcar al usuario como docente
+            'role' => 'docente',
         ]);
 
         // Crear el docente
