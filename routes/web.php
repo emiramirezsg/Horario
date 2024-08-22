@@ -95,3 +95,4 @@ Route::middleware(['auth', 'is_docente'])->group(function () {
 });
 
 Route::post('/cursos/asignar-materias', [CursoController::class, 'asignarMaterias'])->name('cursos.asignarMaterias');
+Route::post('/generate-schedules', [HorarioController::class, 'generateSchedules'])->name('generate.schedules');

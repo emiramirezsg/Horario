@@ -113,15 +113,14 @@
         }
 
         .btn-regresar {
-            position: absolute;
-            top: 20px;
-            right: 120px;
-        }
-
-        .btn-paralelos {
+            background-color: #6c757d;
+            color: #fff;
             position: absolute;
             top: 20px;
             right: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
         }
 
         .btn-regresar:hover, .btn-paralelos:hover {
@@ -224,7 +223,6 @@
     </style>
 </head>
 <body>
-    <a href="{{ route('paralelos.index') }}" class="btn btn-paralelos">Paralelos</a>
     <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
     
     <div class="container">

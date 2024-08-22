@@ -241,9 +241,10 @@
         <div class="card">
             <img src="https://www.bizneo.com/blog/wp-content/uploads/2022/03/programa-de-control-horario.jpg" alt="Horarios">
             <div class="card-content">
-                <h2>Horarios</h2>
+                <h2>Paralelos</h2>
                 <div class="card-actions">
-                    <a href="{{ route('horarios.index') }}" class="btn btn-view">Ver Todos</a>
+                    <a href="{{ route('paralelos.index') }}" class="btn btn-view">Ver</a>
+                    <a href="{{ route('paralelos.create') }}" class="btn btn-manage">Agregar</a>
                 </div>
             </div>
         </div>

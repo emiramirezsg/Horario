@@ -21,4 +21,5 @@ class Horario extends Model
     {
         return $this->belongsTo(Aula::class);
     }
+    
 }

@@ -29,13 +29,15 @@
             margin: 10px;
         }
 
-        .btn-back, .btn-paralelos {
+        .btn-regresar {
             background-color: #6c757d;
             color: #fff;
-        }
-
-        .btn-back:hover, .btn-paralelos:hover {
-            background-color: #5a6268;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
         }
 
         .btn-agregar-paralelo {
@@ -63,6 +65,24 @@
 
         .btn-eliminar:hover {
             background-color: #c82333;
+        }
+
+        .btn-cancelar {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
         }
 
         /* Estilos para las tarjetas de paralelos */
@@ -172,11 +192,11 @@
     </style>
 </head>
 <body>
-    <a href="{{ route('cursos.index') }}" class="btn btn-paralelos">Cursos</a>
-    <a href="{{ route('home') }}" class="btn btn-back">Inicio</a>
+    <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
     
     <div class="container">
         <h2>Lista de Paralelos</h2>
+        <a href="#modalAgregarParalelo" class="btn btn-agregar-paralelo open-modal" data-modal="modalAgregarParalelo">Crear Paralelo</a>
         <div class="paralelos">
             @foreach($paralelos as $paralelo)
             <div class="paralelo-card">
@@ -186,7 +206,7 @@
                     <p><strong>Curso:</strong> {{ $paralelo->curso->nombre }}</p>
                 </div>
                 <div class="botones">
-                    <a href="#modalEditarParalelo" class="btn btn-editar open-modal" data-paralelo-id="{{ $paralelo->id }}" data-paralelo-nombre="{{ $paralelo->nombre }}" data-paralelo-cantidad="{{ $paralelo->cantidad_est }}" title="Editar Paralelo">Editar</a>
+                    <a href="#modalEditarParalelo" class="btn btn-editar open-modal" data-paralelo-id="{{ $paralelo->id }}" data-paralelo-nombre="{{ $paralelo->nombre }}" data-paralelo-cantidad="{{ $paralelo->cantidad_est }}" title="Editar Paralelo" data-modal="modalEditarParalelo">Editar</a>
                     <form action="{{ route('paralelos.destroy', $paralelo->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
@@ -206,7 +226,7 @@
                 <h2>Agregar Paralelo</h2>
             </div>
             <div class="modal-body">
-                <form id="formAgregarParalelo" method="POST">
+                <form id="formAgregarParalelo" method="POST" action="{{ route('paralelos.store') }}">
                     @csrf
                     <input type="hidden" id="curso-id" name="curso_id">
                     <div class="form-group">
@@ -234,18 +254,19 @@
                 <h2>Editar Paralelo</h2>
             </div>
             <div class="modal-body">
-                <form id="formEditarParalelo" method="POST">
+                <form id="formEditarParalelo" method="POST" action="">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" id="edit-paralelo-id" name="id">
                     <div class="form-group">
-                        <label for="nombre-paralelo-edit">Nombre del Paralelo</label>
-                        <input type="text" id="nombre-paralelo-edit" name="nombre" required>
+                        <label for="edit-nombre-paralelo">Nombre del Paralelo</label>
+                        <input type="text" id="edit-nombre-paralelo" name="nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="cantidad-estudiantes-edit">Cantidad de Estudiantes</label>
-                        <input type="number" id="cantidad-estudiantes-edit" name="cantidad_est" required>
+                        <label for="edit-cantidad-estudiantes">Cantidad de Estudiantes</label>
+                        <input type="number" id="edit-cantidad-estudiantes" name="cantidad_est" required>
                     </div>
-                    <button type="submit" class="btn btn-submit">Guardar Cambios</button>
+                    <button type="submit" class="btn btn-submit">Actualizar</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -256,19 +277,25 @@
 
     <script>
         document.querySelectorAll('.open-modal').forEach(button => {
-            button.addEventListener('click', function() {
-                const modalId = this.getAttribute('data-modal');
-                const paraleloId = this.getAttribute('data-paralelo-id');
-                const paraleloNombre = this.getAttribute('data-paralelo-nombre');
-                const paraleloCantidad = this.getAttribute('data-paralelo-cantidad');
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modalId = button.getAttribute('data-modal');
+                const modal = document.getElementById(modalId);
+
                 if (modalId === 'modalEditarParalelo') {
+                    const paraleloId = button.getAttribute('data-paralelo-id');
+                    const paraleloNombre = button.getAttribute('data-paralelo-nombre');
+                    const paraleloCantidad = button.getAttribute('data-paralelo-cantidad');
+
+                    document.getElementById('edit-paralelo-id').value = paraleloId;
+                    document.getElementById('edit-nombre-paralelo').value = paraleloNombre;
+                    document.getElementById('edit-cantidad-estudiantes').value = paraleloCantidad;
                     document.getElementById('formEditarParalelo').action = `/paralelos/${paraleloId}`;
-                    document.getElementById('nombre-paralelo-edit').value = paraleloNombre;
-                    document.getElementById('cantidad-estudiantes-edit').value = paraleloCantidad;
                 } else if (modalId === 'modalAgregarParalelo') {
-                    document.getElementById('curso-id').value = this.getAttribute('data-curso-id');
+                    document.getElementById('formAgregarParalelo').reset();
                 }
-                document.getElementById(modalId).style.display = 'block';
+
+                modal.style.display = 'block';
             });
         });
 
