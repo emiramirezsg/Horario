@@ -8,17 +8,18 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #e0f7fa;
             margin: 0;
             padding: 0;
         }
 
         .user-bar {
-            background-color: #3258ab;
+            background-color: #00796b;
             padding: 20px;
             color: #fff;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
         }
@@ -29,38 +30,34 @@
             color: #fff;
         }
 
-        .btn-back {
-            background-color: #dc3545;
+        .btn-logout {
+            background-color: #d32f2f;
             border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
         }
 
-        .btn-back img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .btn-back:hover {
-            background-color: #c82333;
+        .btn-logout:hover {
+            background-color: #c62828;
         }
 
         .container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #00796b;
+            margin-bottom: 20px;
+            font-size: 2em;
         }
 
         .table {
@@ -69,14 +66,27 @@
             margin-bottom: 20px;
         }
 
-        .table th, .table td {
+        .table th {
+            background-color: #00796b;
+            color: #fff;
             padding: 12px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
-        .table th {
-            background-color: #f4f4f4;
+        .table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+            background-color: #e0f2f1;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #b2dfdb;
+        }
+
+        .table tbody tr:hover {
+            background-color: #80cbc4;
         }
     </style>
 </head>
@@ -85,6 +95,10 @@
         <div class="user-info">
             <h2>{{ Auth::user()->name }}</h2>
         </div>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn-logout">Cerrar Sesión</button>
+        </form>
     </div>
 
     <div class="container">

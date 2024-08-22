@@ -7,10 +7,9 @@ class Materia extends Model
 {
     protected $fillable = ['nombre',];
 
-    public function curso()
+    public function cursos()
     {
-        return $this->belongsToMany(Curso::class, 'materia_curso')
-                    ->withPivot('cantidad_horas_semanales');
+        return $this->belongsToMany(Curso::class, 'curso_materia');
     }
 
     public function docentes()

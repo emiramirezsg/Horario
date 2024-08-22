@@ -64,14 +64,11 @@ class CursoController extends Controller
 
         return redirect()->route('cursos.index');
     }
-    public function asignarMaterias(Request $request, $curso_id)
-{
-    $curso = Curso::findOrFail($curso_id);
-    $materias = $request->input('materias');
-    $curso->materias()->sync($materias);
+    public function asignarMaterias(Request $request)
+    {
+        $curso = Curso::findOrFail($request->input('curso_id'));
+        $curso->materias()->sync($request->input('materias')); // Sincroniza las materias asociadas al curso
 
-    return redirect()->route('cursos.index')->with('success', 'Materias asignadas correctamente');
-}
-
-
+        return redirect()->route('cursos.index')->with('success', 'Materias asignadas correctamente.');
+    }
 }

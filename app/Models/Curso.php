@@ -9,8 +9,7 @@ class Curso extends Model
 
     public function materias()
     {
-        return $this->belongsToMany(Materia::class, 'materia_curso')
-                    ->withPivot('cantidad_horas_semanales');
+    return $this->belongsToMany(Materia::class, 'curso_materia');
     }
 
     public function paralelos()

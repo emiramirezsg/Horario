@@ -196,7 +196,6 @@
             </div>
             @endforeach
         </div>
-        <a href="#modalAgregarParalelo" class="btn btn-agregar-paralelo open-modal">Agregar Paralelo</a>
     </div>
 
     <!-- Modal Agregar Paralelo -->

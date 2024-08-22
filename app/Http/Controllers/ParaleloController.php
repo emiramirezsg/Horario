@@ -29,7 +29,7 @@ class ParaleloController extends Controller
 
         Paralelo::create($validated);
 
-        return redirect()->route('paralelos.index');
+        return redirect()->route('cursos.index');
     }
 
     public function show(Paralelo $paralelo)
@@ -40,7 +40,7 @@ class ParaleloController extends Controller
     public function edit(Paralelo $paralelo)
     {
         $cursos = Curso::all();
-        return view('paralelos.edit', compact('paralelo', 'cursos'));
+        return view('cursos.edit', compact('paralelo', 'cursos'));
     }
 
     public function update(Request $request, Paralelo $paralelo)
@@ -53,13 +53,13 @@ class ParaleloController extends Controller
 
         $paralelo->update($validated);
 
-        return redirect()->route('paralelos.index');
+        return redirect()->route('cursos.index');
     }
 
     public function destroy(Paralelo $paralelo)
     {
         $paralelo->delete();
 
-        return redirect()->route('paralelos.index');
+        return redirect()->route('cursos.index');
     }
 }

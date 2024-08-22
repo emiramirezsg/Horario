@@ -116,7 +116,7 @@
     </style>
 </head>
 <body>
-    <a href="{{ route('home') }}" class="btn btn-regresar">Regresar a Inicio</a>
+    <a href="{{ route('home') }}" class="btn btn-regresar">Inicio</a>
     
     <div class="container">
         <h2>Lista de Materias</h2>

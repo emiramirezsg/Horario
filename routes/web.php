@@ -94,4 +94,4 @@ Route::middleware(['auth', 'is_docente'])->group(function () {
     // Otras rutas para docentes
 });
 
-Route::put('/cursos/{curso_id}/asignar-materias', [CursoController::class, 'asignarMaterias'])->name('cursos.asignarMaterias');
+Route::post('/cursos/asignar-materias', [CursoController::class, 'asignarMaterias'])->name('cursos.asignarMaterias');

@@ -95,7 +95,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="{{ route('home') }}" class="btn-back">Volver</a>
+        <a href="{{ route('home') }}" class="btn-back">Inicio</a>
 
         <h2>Lista de Horarios</h2>
         <a href="#modalAgregarHorario" class="btn btn-agregar-horario">Agregar Horario</a>
