@@ -77,12 +77,25 @@ class CreateUsersTable extends Migration
             $table->string('cantidad_mesas');
             $table->timestamps();
         });
+
+        $aulas = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $aulas[] = [
+                'nombre' => 'Aula ' . $i,
+                'cantidad_sillas' => 30,
+                'cantidad_mesas' => 30,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        DB::table('aulas')->insert($aulas);
     
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->integer('hrs_trabajo');
-            $table->string('dias_libres');
             $table->timestamps();
         });
 
@@ -129,43 +142,62 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+        $categoriaId = DB::table('categorias')->where('nombre', 'merito')->value('id');
+
+        // ID de las materias
+        $materias = [
+            'Lengua Castellana y Originaria' => DB::table('materias')->where('nombre', 'Lengua Castellana y Originaria')->value('id'),
+            'Ciencias Sociales' => DB::table('materias')->where('nombre', 'Ciencias Sociales')->value('id'),
+            'Matemáticas' => DB::table('materias')->where('nombre', 'Matematicas')->value('id'),
+            'Biologia Geografia' => DB::table('materias')->where('nombre', 'Biologia Geografia')->value('id'),
+            'Educacion Musical' => DB::table('materias')->where('nombre', 'Educacion Musical')->value('id'),
+            'Educacion fisica' => DB::table('materias')->where('nombre', 'Educacion fisica')->value('id'),
+            'Fisica' => DB::table('materias')->where('nombre', 'Fisica')->value('id'),
+            'Quimica' => DB::table('materias')->where('nombre', 'Quimica')->value('id'),
+            'Cosmos Visiones, Filosofia y Psicologia' => DB::table('materias')->where('nombre', 'Cosmos Visiones, Filosofia y Psicologia')->value('id'),
+            'Tecnica tecnologica general' => DB::table('materias')->where('nombre', 'Tecnica tecnologica general')->value('id'),
+            'Tecnica tecnologica especializada' => DB::table('materias')->where('nombre', 'Tecnica tecnologica especializada')->value('id'),
+            'Artes Plasticas y Visuales' => DB::table('materias')->where('nombre', 'Artes Plasticas y Visuales')->value('id'),
+            'Valores Espirituales y Religiones' => DB::table('materias')->where('nombre', 'Valores Espirituales y Religiones')->value('id'),
+            'Lengua Extranjera' => DB::table('materias')->where('nombre', 'Lengua Extranjera')->value('id'),
+        ];
+
+        // Lista de usuarios docentes (ID de usuarios)
         $docenteUserIds = [
             2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
         ];
 
-        // Materias
-        $materias = [
-            'Lengua Castellana y Originaria',
-            'Ciencias Sociales',
-            'Matemáticas',
-            'Ciencias Naturales',
-            'Educación Física',
-            'Ingles',
-            'Arte y Cultura',
-            'Tecnología',
-            'Educación para la Vida',
-        ];
-
         // Asignar 2 docentes a las primeras 3 materias
         $asignaciones = [
-            ['materia' => 'Lengua Castellana y Originaria', 'docentes' => [2, 3]],
-            ['materia' => 'Ciencias Sociales', 'docentes' => [4, 5]],
-            ['materia' => 'Matemáticas', 'docentes' => [6, 7]],
+            ['materia_id' => $materias['Lengua Castellana y Originaria'], 'docentes' => [0, 1]],
+            ['materia_id' => $materias['Ciencias Sociales'], 'docentes' => [2, 3]],
+            ['materia_id' => $materias['Matemáticas'], 'docentes' => [4, 5]],
         ];
 
         // Asignar 1 docente a las demás materias
-        $remainingDocentes = array_slice($docenteUserIds, 6);
-        foreach (array_slice($materias, 3) as $index => $materia) {
-            $asignaciones[] = ['materia' => $materia, 'docentes' => [$remainingDocentes[$index]]];
+        $indexOffset = 6;
+        foreach (array_slice(array_values($materias), 3) as $index => $materia_id) {
+            $asignaciones[] = ['materia_id' => $materia_id, 'docentes' => [$index + $indexOffset]];
         }
 
         // Insertar los registros de docentes
+        $nombres = [
+            'Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank', 'Grace', 'Hannah', 'Ian', 'Jane', 'Kyle', 'Laura', 'Mike', 'Nina', 'Oscar', 'Paul', 'Quinn'
+        ];
+
+        $apellidos = [
+            'Smith', 'Johnson', 'Brown', 'Wilson', 'Davis', 'Miller', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'King', 'Scott', 'Wright', 'Harris', 'Green', 'Turner'
+        ];
+
         foreach ($asignaciones as $asignacion) {
-            foreach ($asignacion['docentes'] as $docenteUserId) {
+            foreach ($asignacion['docentes'] as $index) {
                 DB::table('docentes')->insert([
-                    'user_id' => $docenteUserId,
-                    'categoria' => 'merito',
-                    'materia' => $asignacion['materia'],
+                    'nombre' => $nombres[$index],
+                    'apellido' => $apellidos[$index],
+                    'email' => strtolower($nombres[$index]) . strtolower($apellidos[$index]) . '@example.com',
+                    'categoria_id' => $categoriaId,
+                    'user_id' => $docenteUserIds[$index],
+                    'materia_id' => $asignacion['materia_id'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -273,6 +305,7 @@ class CreateUsersTable extends Migration
     
         Schema::create('horarios', function (Blueprint $table) {
             $table->id();
+            $table->string('dia');
             $table->time('hora_inicio');
             $table->time('hora_fin');
             $table->timestamps();
