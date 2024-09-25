@@ -12,9 +12,9 @@ class Horario extends Model
         return $this->belongsTo(Periodo::class);
     }
 
-    public function docenteMateria()
+    public function materia()
     {
-        return $this->belongsTo(DocenteMateria::class);
+        return $this->belongsTo(Materia::class);
     }
 
     public function aula()

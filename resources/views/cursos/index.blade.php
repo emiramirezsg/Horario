@@ -259,7 +259,6 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de querer eliminar este curso?')">Eliminar Curso</button>
                     </form>
-                    <a href="#modalAsignarMaterias" class="btn btn-agregar-curso open-modal" data-curso-id="{{ $curso->id }}" title="Asignar Materias">Asignar Materias</a>
                 </div>
             </div>
             @endforeach

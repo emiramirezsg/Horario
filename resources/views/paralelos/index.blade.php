@@ -217,7 +217,7 @@
             @endforeach
         </div>
     </div>
-
+         
     <!-- Modal Agregar Paralelo -->
     <div id="modalAgregarParalelo" class="modal">
         <div class="modal-content">

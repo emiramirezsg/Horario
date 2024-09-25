@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Docente extends Model
 {
-    protected $fillable = ['nombre', 'apellido', 'email', 'categoria_id', 'user_id'];
+    protected $fillable = ['nombre', 'apellido', 'email', 'categoria_id', 'user_id', 'materia_id'];
 
     public function categoria()
     {
@@ -24,7 +24,7 @@ class Docente extends Model
 
     public function horarios()
     {
-        return $this->hasManyThrough(Horario::class, DocenteMateria::class, 'docente_id', 'docente_materia_id', 'id', 'id');
+        return $this->hasMany(Horario::class);
     }
     public function user()
     {

@@ -47,4 +47,13 @@ class HorarioController extends Controller
 
         return response()->json(['message' => 'Horarios generados correctamente']);
     }
+    public function showHorarios()
+    {
+        $user = Auth::user();
+        $horarios = $user->horarios()->with('materia', 'aula')->get(); // Cargar horarios con materias y aulas
+
+        dd($horarios);
+
+        return view('docentevista.index');
+    }
 }

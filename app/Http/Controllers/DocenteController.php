@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Docente;
 use App\Models\Categoria;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -20,11 +21,13 @@ class DocenteController extends Controller
     public function create()
     {
         $categorias = Categoria::all();
-        return view('docentes.create', compact('categorias'));
+        $materias = Materia::all();
+        return view('docentes.create', compact('categorias', 'materias'));
     }
 
     public function store(Request $request)
     {
+        //dd($request->all());
         // Validar la solicitud
         $validated = $request->validate([
             'nombre' => 'required|',
@@ -51,6 +54,7 @@ class DocenteController extends Controller
             'email' => $validated['email'],
             'categoria_id' => $validated['categoria_id'],
             'user_id' => $user->id, // Asocia el docente con el usuario
+            'materia_id' => $request['materia_id'],
         ]);
 
         return redirect()->route('docentes.index')->with('success', 'Docente creado con éxito.');
@@ -70,7 +74,8 @@ class DocenteController extends Controller
     public function edit(Docente $docente)
     {
         $categorias = Categoria::all();
-        return view('docentes.edit', compact('docente', 'categorias'));
+        $materias = Materia::all();
+        return view('docentes.edit', compact('docente', 'categorias', 'materias'));
     }
 
     public function update(Request $request, Docente $docente)
@@ -120,8 +125,7 @@ class DocenteController extends Controller
             return redirect()->route('home')->with('error', 'No se encontró el docente asociado.');
         }
 
-        $horarios = $docente->horarios; // Asegúrate de tener una relación definida en el modelo Docente
 
-        return view('docentevista.index', compact('horarios'));
+        return view('docentevista.index');
     }
 }

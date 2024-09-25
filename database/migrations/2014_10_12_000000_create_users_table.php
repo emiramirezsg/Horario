@@ -305,20 +305,19 @@ class CreateUsersTable extends Migration
     
         Schema::create('horarios', function (Blueprint $table) {
             $table->id();
-            $table->string('dia');
             $table->time('hora_inicio');
             $table->time('hora_fin');
             $table->timestamps();
         });
 
         DB::table('horarios')->insert([
-            ['dia' => 'lunes', 'hora_inicio' => '07:30', 'hora_fin' => '08:10'],
-            ['dia' => 'lunes', 'hora_inicio' => '08:10', 'hora_fin' => '08:50'],
-            ['dia' => 'lunes', 'hora_inicio' => '09:05', 'hora_fin' => '09:45'],
-            ['dia' => 'lunes', 'hora_inicio' => '09:45', 'hora_fin' => '10:25'],
-            ['dia' => 'lunes', 'hora_inicio' => '11:00', 'hora_fin' => '11:40'],
-            ['dia' => 'lunes', 'hora_inicio' => '11:40', 'hora_fin' => '12:20'],
-            ['dia' => 'lunes', 'hora_inicio' => '12:20', 'hora_fin' => '13:00'],
+            ['hora_inicio' => '07:30', 'hora_fin' => '08:10'],
+            ['hora_inicio' => '08:10', 'hora_fin' => '08:50'],
+            ['hora_inicio' => '09:05', 'hora_fin' => '09:45'],
+            ['hora_inicio' => '09:45', 'hora_fin' => '10:25'],
+            ['hora_inicio' => '11:00', 'hora_fin' => '11:40'],
+            ['hora_inicio' => '11:40', 'hora_fin' => '12:20'],
+            ['hora_inicio' => '12:20', 'hora_fin' => '13:00'],
         ]);
     
         Schema::create('paralelos', function (Blueprint $table) {
