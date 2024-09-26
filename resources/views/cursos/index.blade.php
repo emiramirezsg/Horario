@@ -259,6 +259,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-eliminar" onclick="return confirm('¿Estás seguro de querer eliminar este curso?')">Eliminar Curso</button>
                     </form>
+                    <a href="#modalAgregarMateria" class="btn btn-agregar-materia open-modal" data-curso-id="{{ $curso->id }}">Agregar Materia</a>
                 </div>
             </div>
             @endforeach
@@ -315,6 +316,31 @@
         </div>
     </div>
 
+<!-- Modal Agregar Materia -->
+<div id="modalAgregarMateria" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar Materia</h2>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('materias.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="curso_id" id="curso-id-materia">
+                <div class="form-group">
+                    <label for="materia-nombre">Nombre de la Materia:</label>
+                    <input type="text" id="materia-nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-agregar-curso">Agregar Materia</button>
+                    <button type="button" class="btn btn-cancelar modal-close">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <!-- Modal Editar Curso -->
     <div id="modalEditarCurso" class="modal">
         <div class="modal-content">
@@ -365,33 +391,6 @@
         </div>
     </div>
 
-   <!-- Modal Asignar Materias -->
-<div id="modalAsignarMaterias" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <div class="modal-header">
-            <h2>Asignar Materias</h2>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('cursos.asignarMaterias') }}" method="POST" id="form-asignar-materias">
-                @csrf
-                <input type="hidden" name="curso_id" id="curso-id-asignar">
-
-                <div class="form-group">
-                    <label for="materias">Seleccionar Materias:</label>
-                    <select multiple id="materias" name="materias[]" class="form-control">
-                        @foreach($materias as $materia)
-                            <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-agregar-curso">Asignar Materias</button>
-            </form>
-        </div>
-    </div>
-</div>
-
 
     <script>
         document.querySelectorAll('.open-modal').forEach(button => {
@@ -434,5 +433,33 @@
             }
         });
     </script>
+    <script>
+    // Abre el modal para agregar materia y establece el curso ID
+    document.querySelectorAll('.open-modal').forEach(button => {
+        button.addEventListener('click', function () {
+            const cursoId = this.getAttribute('data-curso-id');
+            if (this.href.includes('modalAgregarMateria')) {
+                document.getElementById('curso-id-materia').value = cursoId;
+            }
+        });
+    });
+
+    // Cierra el modal
+    document.querySelectorAll('.modal-close').forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+
+    // Cierra el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    };
+</script>
 </body>
 </html>

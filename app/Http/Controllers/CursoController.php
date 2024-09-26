@@ -58,12 +58,18 @@ class CursoController extends Controller
         return redirect()->route('cursos.index');
     }
 
-    public function destroy(Curso $curso)
-    {
-        $curso->delete();
-
-        return redirect()->route('cursos.index');
-    }
+    public function destroy($id)
+{
+    $curso = Curso::findOrFail($id);
+    
+    // Eliminar todos los paralelos asociados
+    $curso->paralelos()->delete();
+    
+    // Ahora eliminar el curso
+    $curso->delete();
+    
+    return redirect()->route('cursos.index')->with('success', 'Curso y sus paralelos eliminados exitosamente.');
+}
     public function asignarMaterias(Request $request)
     {
         $curso = Curso::findOrFail($request->input('curso_id'));

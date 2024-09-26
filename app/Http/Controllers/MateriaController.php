@@ -27,7 +27,7 @@ class MateriaController extends Controller
 
         Materia::create($validatedData);
 
-        return redirect()->route('materias.index')->with('success', 'Materia creada exitosamente.');
+        return redirect()->route('cursos.index')->with('success', 'Materia creada exitosamente.');
     }
 
     public function show(Materia $materia)
